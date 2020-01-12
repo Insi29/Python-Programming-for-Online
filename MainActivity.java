@@ -1,8 +1,4 @@
-package com.example.chatapp;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+package com.example.talksquad;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,8 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
-import com.example.chatapp.Model.User;
+import com.example.talksquad.Model.User;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity {
     CircleImageView profile_image;
@@ -35,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Talk Squad");
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -61,7 +65,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(getResources().getString(R.string.app_name));
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        TabItem tabChats = findViewById(R.id.tab_chats);
+        TabItem tabStatus = findViewById(R.id.tab_status);
+        TabItem tabCalls = findViewById(R.id.tab_users);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -78,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
                 return true;
 
-        }return false;
+        }
+        return false;
     }
+
+
 }
