@@ -1,3 +1,5 @@
+
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -38,15 +40,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         String title = null;
         if (position == 0)
         {
-            title = "Tab-1";
+            title = "Chats";
         }
         else if (position == 1)
         {
-            title = "Tab-2";
-        }
-        else if (position == 2)
-        {
-            title = "Tab-3";
+            title = "Users";
         }
         return title;
     }
