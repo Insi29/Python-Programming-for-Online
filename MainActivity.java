@@ -1,9 +1,12 @@
 package com.example.talksquad;
 
+package com.example.talksquad;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +16,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.talksquad.Model.User;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Talk Squad");
         profile_image = findViewById(R.id.profile_image);
         username = findViewById(R.id.username);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -65,13 +78,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        TabItem tabChats = findViewById(R.id.tab_chats);
-        TabItem tabStatus = findViewById(R.id.tab_status);
-        TabItem tabCalls = findViewById(R.id.tab_users);
-        ViewPager viewPager = findViewById(R.id.view_pager);
+
+        TabLayout tabLayout;
+        ViewPager viewPager;
+        ViewPagerAdapter viewPagerAdapter;
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),0);
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -93,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return false;
+
     }
 
 
