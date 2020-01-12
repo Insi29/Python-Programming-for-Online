@@ -1,4 +1,4 @@
-?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,6 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:background="@color/colorPrimaryDark"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -48,28 +49,6 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="#fff"
             app:tabTextColor="#fff">
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_chats"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:text="Chats" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:text="Status" />
-
-            <android.support.design.widget.TabItem
-                android:id="@+id/tab_users"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#fff"
-                android:text="Users" />
-
         </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -78,15 +57,16 @@
 
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb"
+            android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@android:drawable/ic_lock_lock" />
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@android:drawable/ic_dialog_email" />
 
     </androidx.viewpager.widget.ViewPager>
 
