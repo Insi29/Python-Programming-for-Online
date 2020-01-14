@@ -1,3 +1,4 @@
+package com.example.talksquad;
 
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.talksquad.Fragments.ChatsFragment;
+import com.example.talksquad.Fragments.ProfileFragment;
 import com.example.talksquad.Fragments.UsersFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -27,6 +29,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         {
             fragment = new UsersFragment();
         }
+        else if(position==2){
+            fragment=new ProfileFragment();
+        }
         return fragment;
     }
 
@@ -45,6 +50,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         else if (position == 1)
         {
             title = "Users";
+        }
+        else if(position==2){
+            title="Profile";
         }
         return title;
     }
