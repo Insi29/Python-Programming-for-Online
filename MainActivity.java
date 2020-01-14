@@ -1,9 +1,9 @@
 package com.example.talksquad;
-
 package com.example.talksquad;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     TextView username;
     FirebaseUser firebaseUser;
     DatabaseReference reference;
+
 
 
     @Override
@@ -61,10 +64,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                username.setText((user.getUsername()));
+                username.setText(user.getUsername());
                 if (user.getImageURL().equals("default")) {
                     profile_image.setImageResource(R.mipmap.ic_launcher);
-                } else {
+                }
+                else {
                     Glide.with(MainActivity.this).load(user.getImageURL()).into(profile_image);
 
 
@@ -113,3 +117,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 }
+
