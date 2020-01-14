@@ -3,18 +3,18 @@ package com.example.talksquad.Model;
 public class User {
     private String Id;
     private String username;
-    private String imageURL;
+    private String ImageURL;
     public User(String user_id, String userName, String image_URL){
         Id=user_id;
         username=userName;
-        imageURL=image_URL;
+        ImageURL=image_URL;
 
     }
     public User(){
 
     }
     //public void setUsername(String u){
-      //  username=u;
+    //  username=u;
 
     //}
 
@@ -25,7 +25,7 @@ public class User {
 
 
     public String getImageURL() {
-        return imageURL;
+        return ImageURL;
     }
 
 
@@ -34,4 +34,5 @@ public class User {
     }
 
 }
+
 
