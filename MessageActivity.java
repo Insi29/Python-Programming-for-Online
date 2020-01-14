@@ -3,6 +3,8 @@ package com.example.talksquad;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.talksquad.Adapter.MessageAdapter;
+import com.example.talksquad.Model.Chat;
 import com.example.talksquad.Model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +28,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -35,6 +41,9 @@ public class MessageActivity extends AppCompatActivity {
     DatabaseReference reference;
     ImageButton btn_send;
     EditText text_send;
+    MessageAdapter messageAdapter;
+    List<Chat> mchat;
+    RecyclerView recyclerView;
     Intent intent;
 
 
@@ -51,6 +60,13 @@ public class MessageActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        recyclerView=findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         profile_image=findViewById(R.id.profile_image);
         username=findViewById(R.id.username);
         btn_send=findViewById(R.id.btn_send);
@@ -58,14 +74,14 @@ public class MessageActivity extends AppCompatActivity {
 
 
         intent=getIntent();
-        final String user_id=intent.getStringExtra("id");
+        final String userid=intent.getStringExtra("Id");
         f_user= FirebaseAuth.getInstance().getCurrentUser();
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String msg=text_send.getText().toString();
                 if(!msg.equals("")){
-                    sendMessage(f_user.getUid(),user_id,msg);
+                    sendMessage(f_user.getUid(),userid,msg);
                 }
                 else {
                     Toast.makeText(MessageActivity.this,"You can't send empty message",Toast.LENGTH_SHORT).show();
@@ -74,8 +90,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        assert user_id != null;
-        reference= FirebaseDatabase.getInstance().getReference("Users").child(user_id);
+        assert userid != null;
+        reference= FirebaseDatabase.getInstance().getReference("Users").child(userid);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,6 +102,7 @@ public class MessageActivity extends AppCompatActivity {
                 }else{
                     Glide.with(MessageActivity.this).load(user.getImageURL()).into(profile_image);
                 }
+                readMessages(f_user.getUid(),userid,user.getImageURL());
             }
 
             @Override
@@ -103,6 +120,30 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("message",message);
         reference.child("Chats").push().setValue(hashMap);
 
+    }
+    private void readMessages(String myid, String userid,String imageurl){
+        mchat=new ArrayList<>();
+        reference=FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mchat.clear();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    Chat chat=snapshot.getValue(Chat.class);
+                    if(chat.getReciever().equals(myid) && chat.getSender().equals(userid)|| chat.getReciever().equals(userid)&& chat.getSender().equals(myid)){
+                        mchat.add(chat);
+
+                    }
+                    messageAdapter=new MessageAdapter(MessageActivity.this,mchat,imageurl);
+                    recyclerView.setAdapter(messageAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
