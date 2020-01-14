@@ -1,40 +1,37 @@
-package com.example.chatapp.Model;
+package com.example.talksquad.Model;
 
 public class User {
-    private String id;
+    private String Id;
     private String username;
     private String imageURL;
-    public User(String id, String username, String imageURL){
-        this.id=id;
-        this.username=username;
-        this.imageURL=imageURL;
+    public User(String user_id, String userName, String image_URL){
+        Id=user_id;
+        username=userName;
+        imageURL=image_URL;
 
     }
     public User(){
 
     }
+    //public void setUsername(String u){
+      //  username=u;
+
+    //}
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
 
     public String getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
 
     public String getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 }
+
