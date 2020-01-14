@@ -1,15 +1,16 @@
 
+package com.example.talksquad.Model;
+
 public class Chat {
     private String sender;
-    private String receiver;
+    private String reciever;
     private String message;
 
 
-    public Chat(String sender,String receiver,String message) {
-        this.sender = sender;
-        this.receiver=receiver;
-        this.message=message;
-
+    public Chat(String Sender, String Reciever, String Message) {
+        sender = Sender;
+        reciever = Reciever;
+        message = Message;
     }
 
     public Chat() {
@@ -20,23 +21,13 @@ public class Chat {
         return sender;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
+    public String getReciever() {
+        return reciever;
     }
 
     public String getMessage() {
         return message;
     }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
+
+
