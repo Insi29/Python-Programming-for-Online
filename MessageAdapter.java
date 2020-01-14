@@ -40,11 +40,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == MSG_TYPE_RIGHT) {
             View view= LayoutInflater.from(mContext).inflate(R.layout.chat_item_right,parent,false);
-            return new MessageAdapter.ViewHolder(view); 
+            return new MessageAdapter.ViewHolder(view);
         }else {
             View view= LayoutInflater.from(mContext).inflate(R.layout.chat_item_left,parent,false);
             return new MessageAdapter.ViewHolder(view);
-            
+
         }
     }
 
@@ -57,7 +57,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
        }else{
            Glide.with(mContext).load(imageurl).into(holder.profile_image);
        }
-       
+
 
     }
 
@@ -85,7 +85,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             return MSG_TYPE_RIGHT;
         }else{
             return MSG_TYPE_LEFT;
-            
+
         }
     }
 }
