@@ -23,6 +23,7 @@ import com.example.talksquad.Model.User;
 import com.example.talksquad.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
         username=view.findViewById(R.id.username);
 
         storageReference= FirebaseStorage.getInstance().getReference("uploads");
+
         fuser= FirebaseAuth.getInstance().getCurrentUser();
         reference= FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
@@ -136,6 +138,12 @@ public class ProfileFragment extends Fragment {
                     }
 
                 }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
+                }
             });
 
 
@@ -145,11 +153,11 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == IMAGE_REQUEST && resultCode==RESULT_OK && data!=null && data.getData()!=null){
             imageUri=data.getData();
-            if(uploadTask!=null && uploadTask.isInProgress()){
+            if(uploadTask != null && uploadTask.isInProgress()){
                 Toast.makeText(getContext(),"Upload in progress",Toast.LENGTH_SHORT).show();
 
             }else{
